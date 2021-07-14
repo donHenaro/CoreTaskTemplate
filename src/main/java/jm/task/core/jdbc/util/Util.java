@@ -30,5 +30,6 @@ public class Util {
         if(!connection.isClosed()){
             connection.close();
         }
+        System.out.println("Соединение закрыто");
     }
 }

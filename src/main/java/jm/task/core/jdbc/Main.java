@@ -1,6 +1,7 @@
 package jm.task.core.jdbc;
-
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.util.Util;
+import java.sql.SQLException;
 
 /*  Создание таблицы User(ов)
     Добавление 4 User(ов) в таблицу с данными на свой выбор. После каждого добавления должен быть вывод в консоль ( User с именем – name добавлен в базу данных )
@@ -9,7 +10,7 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
     Удаление таблицы
 */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         UserDaoJDBCImpl daoJDBC = new UserDaoJDBCImpl();
 
@@ -24,6 +25,8 @@ public class Main {
 
         daoJDBC.cleanUsersTable();
         daoJDBC.dropUsersTable();
+
+        Util.close();
 
     }
 }
