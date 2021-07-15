@@ -37,8 +37,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Statement st = cn.createStatement()) {
-            String sql = "DROP TABLE IF EXISTS USERS";
-            st.executeUpdate(sql);
+            st.executeUpdate("DROP TABLE IF EXISTS USERS");
             System.out.println("Удалена таблица USERS");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -47,8 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
 
-        String sql = "INSERT INTO USERS (NAME, LASTNAME, AGE) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = cn.prepareStatement(sql)) {
+        try (PreparedStatement ps = cn.prepareStatement("INSERT INTO USERS (NAME, LASTNAME, AGE) VALUES (?, ?, ?)")) {
             ps.setString(1, name);
             ps.setString(2, lastName);
             ps.setByte(3, age);
@@ -61,8 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        String sql = "DELETE FROM USERS WHERE ID = ?;";
-        try (PreparedStatement ps = cn.prepareStatement(sql)) {
+        try (PreparedStatement ps = cn.prepareStatement("DELETE FROM USERS WHERE ID = ?;")) {
             ps.setLong(1, id);
             ps.execute();
 
@@ -74,9 +71,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> ret;
-        String sql = "SELECT * FROM USERS;";
         try (Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-             ResultSet res = st.executeQuery(sql);) {
+             ResultSet res = st.executeQuery("SELECT * FROM USERS;");) {
             res.last();
             ret = new ArrayList(res.getRow());
             res.beforeFirst();
@@ -97,8 +93,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Statement st = cn.createStatement()) {
-            String sql = "DELETE FROM USERS;";
-            st.executeUpdate(sql);
+            st.executeUpdate("DELETE FROM USERS;");
             System.out.println("Очищена таблица USERS");
         } catch (SQLException throwables) {
             throwables.printStackTrace();

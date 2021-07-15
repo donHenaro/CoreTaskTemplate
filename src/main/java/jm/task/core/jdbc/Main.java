@@ -1,5 +1,7 @@
 package jm.task.core.jdbc;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 import java.sql.SQLException;
 
@@ -12,19 +14,19 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws SQLException {
 
-        UserDaoJDBCImpl daoJDBC = new UserDaoJDBCImpl();
+        UserService serv = new UserServiceImpl();
 
-        daoJDBC.createUsersTable();
+        serv.createUsersTable();
 
-        daoJDBC.saveUser("Иван", "Иванов", (byte) 20);
-        daoJDBC.saveUser("Петр", "Семенов", (byte) 25);
-        daoJDBC.saveUser("Сергей", "Михайлов", (byte) 24);
-        daoJDBC.saveUser("Николай", "Стариков", (byte) 35);
+        serv.saveUser("Иван", "Иванов", (byte) 20);
+        serv.saveUser("Петр", "Семенов", (byte) 25);
+        serv.saveUser("Сергей", "Михайлов", (byte) 24);
+        serv.saveUser("Николай", "Стариков", (byte) 35);
 
-        daoJDBC.getAllUsers().forEach(System.out::println);
+        serv.getAllUsers().forEach(System.out::println);
 
-        daoJDBC.cleanUsersTable();
-        daoJDBC.dropUsersTable();
+        serv.cleanUsersTable();
+        serv.dropUsersTable();
 
         Util.close();
 
