@@ -2,7 +2,6 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        System.err.println("=================[Используем JDBC]=================");
     }
 
     public void createUsersTable() {
@@ -52,7 +52,7 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.setByte(3, age);
             ps.execute();
 
-            System.out.printf("User : %s, %s, %d сохранен \n", name, lastName, age);
+            System.out.printf("User : %s, %s, %d добавлен. \n", name, lastName, age);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.setLong(1, id);
             ps.execute();
 
-            System.out.printf("ID : %d удален \n", id);
+            System.out.printf("ID : %d удален. \n", id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

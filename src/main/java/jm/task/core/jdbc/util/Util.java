@@ -2,11 +2,10 @@ package jm.task.core.jdbc.util;
 
  //Класс Util должен содержать логику настройки соединения с базой данных
 
+import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.metamodel.MetadataSources;
-
+import org.hibernate.cfg.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -35,37 +34,36 @@ public class Util {
         return connection;
     }
 
-    public static void close() throws SQLException {
-        if(!connection.isClosed()){
-            connection.close();
-        }
-        System.out.println("Соединение закрыто");
-    }
+
 
     //=================== Hibernate ====================
-    protected static SessionFactory buildSessionFactory() {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure("hibernate.cfg.xml")
-                .build();
-        try {
-            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
-            StandardServiceRegistryBuilder.destroy( registry );
-            throw new ExceptionInInitializerError("Initial SessionFactory failed" + e);
-        }
-        return sessionFactory;
-    }
-
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
-            sessionFactory = buildSessionFactory();
+            try {
+                Configuration configuration = new Configuration().configure();
+                configuration.addAnnotatedClass(User.class);
+                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+                sessionFactory = configuration.buildSessionFactory(builder.build());
+
+            } catch (Exception e) {
+                System.out.println("Исключение!" + e);
+            }
         }
         return sessionFactory;
     }
 
-    public static void shutdown() {
-        // Close caches and connection pools
-        getSessionFactory().close();
+    //=================== Общее закрытие ====================
+    public static void close() {
+        try {
+            connection.close();  // Закрываем Connection если не закрыто
+            System.err.println("=================[Connection закрыт]=================");
+        } catch (SQLException | NullPointerException ignored) {
+        }
+
+        if (sessionFactory != null) {
+            getSessionFactory().close();
+            System.err.println("=================[Сессия закрыта]=================");
+        }
+
     }
 }
