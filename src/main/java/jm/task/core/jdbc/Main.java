@@ -4,7 +4,6 @@ import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
-
 /*  1.Создание таблицы User(ов)
     2.Добавление 4 User(ов) в таблицу с данными на свой выбор. После каждого добавления должен быть вывод в консоль ( User с именем – name добавлен в базу данных )
     3.Получение всех User из базы и вывод в консоль ( должен быть переопределен toString в классе User)
