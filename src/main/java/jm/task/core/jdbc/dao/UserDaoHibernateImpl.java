@@ -48,6 +48,8 @@ public class UserDaoHibernateImpl implements UserDao {
             sess.delete(usr);
             sess.getTransaction().commit();
             System.out.printf("ID : %d удален. \n", id);
+        } else {
+            System.err.printf("ID [%d] отсутствует. \n", id);
         }
     }
 
