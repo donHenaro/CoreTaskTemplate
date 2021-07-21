@@ -25,6 +25,10 @@ public class Main {
 
         serv.getAllUsers().forEach(System.out::println);
 
+        serv.removeUserById(2);
+        serv.removeUserById(2);
+        serv.getAllUsers().forEach(System.out::println);
+
         serv.cleanUsersTable();
         serv.dropUsersTable();
 
